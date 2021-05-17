@@ -15,11 +15,14 @@ ARG SHELLCHECK_VERSION="0.5.0-3"
 ADD requirements.txt /tmp/requirements.txt 
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends build-essential \
-    # Install Python libraries as soon as possible, so we can override the docker-compose version later further down
-    && pip install -r /tmp/requirements.txt \
+    && apt-get install -y --no-install-recommends build-essential 
+
+# Install python libareries
+RUN pip install -r /tmp/requirements.txt
+
+RUN \
     # Install node and npm
-    && curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION} | bash - \
+    curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION} | bash - \
     && apt-get install -y nodejs \
     # Install the Azure CLI and IoT extension
     && curl -sL https://aka.ms/InstallAzureCLIDeb | bash \
@@ -39,18 +42,6 @@ RUN apt-get update \
     && npm install markdown-spellcheck@${MD_SPELLCHECK_VERSION} -g \
     && npm install markdown-link-check@${MD_LINK_CHECK_VERSION} -g \
     && npm install markdownlint-cli@${MD_LINT_VERSION} -g \
-    # Install Terraform
-    && mkdir -p /tmp/docker-downloads \
-    && curl -sSL -o /tmp/docker-downloads/terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
-    && unzip /tmp/docker-downloads/terraform.zip \
-    && mv terraform /usr/local/bin \
-    # Install tflint
-    && curl -sSL -o /tmp/docker-downloads/tflint.zip https://github.com/wata727/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_amd64.zip \
-    && unzip /tmp/docker-downloads/tflint.zip \
-    && mv tflint /usr/local/bin \
-    # Install git lfs
-    && curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash \
-    && apt-get install git-lfs \
     # Add bash completion
     && apt-get update \
     && apt-get -y install bash-completion \
