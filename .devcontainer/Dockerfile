@@ -12,15 +12,12 @@ ARG TFLINT_VERSION="0.22.0"
 ARG DOCKER_COMPOSE_VERSION="1.28.5"
 ARG NODE_VERSION="15.x"
 ARG SHELLCHECK_VERSION="0.5.0-3"
-ADD .devcontainer/requirements.txt /tmp/requirements.txt 
+ADD requirements.txt /tmp/requirements.txt 
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends build-essential \
     # Install Python libraries as soon as possible, so we can override the docker-compose version later further down
     && pip install -r /tmp/requirements.txt \
-    && pip install -e /edge-modules-library/ \
-    # install uvicorn in a separate command to avoid conflicts with iotedgedev
-    && pip install uvicorn[standard]==0.13.4 \
     # Install node and npm
     && curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION} | bash - \
     && apt-get install -y nodejs \

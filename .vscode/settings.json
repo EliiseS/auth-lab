@@ -1,0 +1,26 @@
+{
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Args": [
+        "--config=setup.cfg"
+    ],
+    "python.formatting.provider": "black",
+    "yaml.format.enable": true,
+    "yaml.format.singleQuote": true,
+    "[yaml]": {
+        "editor.detectIndentation": false,
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.formatOnSave": true
+    },
+    "shellcheck.customArgs": [
+        "-x"
+    ],
+    "editor.codeActionsOnSave": {
+        "source.fixAll.markdownlint": true
+    },
+    "cSpell.words": [
+        "TLDR"
+    ]
+}
